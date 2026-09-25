@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>对联生成器 - 在线对对联工具 | 春节开业婚庆对联大全 | 对联.cn</title>
+<meta name="description" content="对联生成器是一款免费的在线对对联工具，支持春节、开业、婚庆、乔迁、祝寿、书房等场景对联自动生成，也可输入上联智能对下联，自动匹配横批。春联、开业联、婚联、寿联一键生成，传承千年联墨文化。">
+<meta name="keywords" content="对联生成器,对对联,对联大全,春联,春联生成,开业对联,婚庆对联,乔迁对联,祝寿对联,横批,在线对联,春节对联,对联.cn">
+<meta name="robots" content="index, follow">
+<meta name="author" content="对联.cn">
+<link rel="canonical" href="https://mfujun2025.github.io/duilian/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="对联.cn - 对联生成器">
+<meta property="og:title" content="对联生成器 - 在线对对联工具 | 对联.cn">
+<meta property="og:description" content="免费在线对联生成工具：七大场景对联自动生成，输入上联智能对下联，自动匹配横批，一键复制分享。">
+<meta property="og:url" content="https://mfujun2025.github.io/duilian/">
+<meta property="og:locale" content="zh_CN">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对联生成器 - 在线对对联工具 | 对联.cn">
+<meta name="twitter:description" content="免费在线对联生成工具：七大场景对联自动生成，输入上联智能对下联，自动匹配横批，一键复制分享。">
+<!-- 结构化数据 -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "对联生成器",
+  "url": "https://mfujun2025.github.io/duilian/",
+  "description": "免费在线对联生成工具，支持春节、开业、婚庆、乔迁、祝寿、书房、通用七大场景，输入上联可智能对下联并自动匹配横批。",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Any",
+  "inLanguage": "zh-CN",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+  "publisher": { "@type": "Organization", "name": "对联.cn" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "对联生成器怎么用？",
+      "acceptedAnswer": { "@type": "Answer", "text": "选择春节、开业、婚庆、乔迁、祝寿、书房等场景标签，点击「换一副」即可随机生成一副对应场景的对联与横批；也可输入上联，点击「对下联」自动生成下联。" }
+    },
+    {
+      "@type": "Question",
+      "name": "如何快速生成一副春联？",
+      "acceptedAnswer": { "@type": "Answer", "text": "点击「春节」场景标签，再点击「换一副」按钮，即可生成一副包含上联、下联和横批的春联，支持一键复制。" }
+    },
+    {
+      "@type": "Question",
+      "name": "对联生成器免费吗？",
+      "acceptedAnswer": { "@type": "Answer", "text": "对联生成器完全免费，无需注册登录，打开页面即可使用，支持在线生成和复制分享。" }
+    }
+  ]
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23B22222'/%3E%3Ctext x='32' y='44' font-size='36' text-anchor='middle' fill='%23F8E8B0' font-family='serif'%3E福%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&amp;family=Noto+Sans+SC:wght@300;400;500;700&amp;display=swap">
+<style>
+:root{
+  --paper:#F7F0E1;
+  --paper-deep:#EFE3C8;
+  --red:#A52024;
+  --red-deep:#8B1A1E;
+  --red-bright:#C2282C;
+  --gold:#D4AF37;
+  --gold-soft:#F0D98C;
+  --ink:#2A2118;
+  --ink-soft:#5C5144;
+  --line:#C9B98F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans SC',-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+  background:
+    radial-gradient(ellipse 1200px 600px at 20% -10%, rgba(212,175,55,.10), transparent 60%),
+    radial-gradient(ellipse 1000px 500px at 90% 10%, rgba(162,32,36,.08), transparent 60%),
+    var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.wrap{width:100%;max-width:980px;padding:28px 20px 60px;display:flex;flex-direction:column;align-items:center}
+
+/* ===== 头部 ===== */
+header{text-align:center;margin-bottom:8px}
+.brand{
+  font-family:'Noto Serif SC',serif;
+  font-weight:900;
+  font-size:clamp(34px,6vw,52px);
+  letter-spacing:.12em;
+  color:var(--red);
+  text-shadow:0 2px 0 rgba(138,26,30,.18);
+}
+.brand small{
+  display:block;
+  font-family:'Noto Sans SC',sans-serif;
+  font-weight:300;
+  font-size:13px;
+  letter-spacing:.5em;
+  color:var(--ink-soft);
+  margin-top:6px;
+  text-indent:.5em;
+}
+.subtitle{
+  font-family:'Noto Serif SC',serif;
+  color:var(--ink-soft);
+  font-size:15px;
+  letter-spacing:.18em;
+  margin:14px 0 6px;
+}
+.seal-row{display:flex;justify-content:center;gap:18px;margin-top:10px}
+.seal{
+  width:52px;height:52px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--red);
+  color:var(--gold-soft);
+  font-family:'Noto Serif SC',serif;
+  font-size:24px;
+  border-radius:8px;
+  box-shadow:inset 0 0 0 2px rgba(240,217,140,.5);
+  transform:rotate(-4deg);
+}
+.seal:nth-child(2){transform:rotate(3deg);background:var(--red-deep)}
+
+/* ===== 对联展示 ===== */
+.stage{
+  margin:26px 0 8px;
+  width:100%;
+  display:flex;
+  justify-content:center;
+}
+.couplet-board{
+  position:relative;
+  background:
+    linear-gradient(180deg, rgba(138,26,30,.06), rgba(138,26,30,.02)),
+    var(--paper-deep);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:clamp(20px,4vw,44px) clamp(16px,3.5vw,40px);
+  box-shadow:0 14px 40px rgba(90,60,30,.14);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  width:100%;
+  max-width:760px;
+}
+/* 横批 */
+.hengpi{
+  background:var(--red);
+  color:var(--gold-soft);
+  font-family:'Noto Serif SC',serif;
+  font-weight:700;
+  font-size:clamp(20px,3.2vw,30px);
+  letter-spacing:.35em;
+  text-indent:.35em;
+  padding:12px clamp(28px,6vw,56px);
+  border-radius:8px;
+  box-shadow:inset 0 0 0 2px rgba(240,217,140,.55), 0 4px 12px rgba(138,26,30,.25);
+  margin-bottom:clamp(22px,4vw,40px);
+  white-space:nowrap;
+  position:relative;
+}
+.hengpi::before,.hengpi::after{
+  content:'';
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:14px;height:14px;
+  background:var(--gold);
+  border-radius:50%;
+  box-shadow:0 0 6px rgba(212,175,55,.6);
+}
+.hengpi::before{left:-7px}
+.hengpi::after{right:-7px}
+/* 上下联 */
+.lines{
+  display:flex;
+  gap:clamp(28px,8vw,80px);
+  justify-content:center;
+}
+.line{
+  writing-mode:vertical-rl;
+  font-family:'Noto Serif SC',serif;
+  font-weight:700;
+  font-size:clamp(26px,5vw,46px);
+  line-height:1.42;
+  letter-spacing:.16em;
+  color:var(--ink);
+  background:
+    linear-gradient(90deg, rgba(212,175,55,.07), rgba(212,175,55,.03)),
+    #FBF6EA;
+  border:1px solid #E3D6B6;
+  border-radius:10px;
+  padding:clamp(16px,2.6vw,26px) 14px;
+  min-height:clamp(300px,52vw,470px);
+  box-shadow:inset -4px 0 10px rgba(90,60,30,.06), 0 6px 18px rgba(90,60,30,.08);
+  position:relative;
+}
+.line.up{order:2}
+.line.down{order:1}
+/* 中轴装饰 */
+.center-ornament{
+  writing-mode:vertical-rl;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;
+  font-family:'Noto Serif SC',serif;
+  color:var(--gold);
+  font-size:clamp(30px,4.6vw,42px);
+}
+.center-ornament .ring{
+  width:clamp(52px,7vw,66px);height:clamp(52px,7vw,66px);
+  border:2px solid var(--gold);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--red);
+  background:rgba(212,175,55,.08);
+  font-size:clamp(24px,3.6vw,32px);
+}
+.center-ornament::before,.center-ornament::after{
+  content:'';
+  width:2px;height:26px;
+  background:linear-gradient(180deg,transparent,var(--gold));
+  opacity:.6;
+}
+/* 落款 */
+.signature{
+  margin-top:clamp(18px,3vw,26px);
+  font-family:'Noto Serif SC',serif;
+  color:var(--ink-soft);
+  font-size:14px;
+  letter-spacing:.2em;
+  opacity:.85;
+}
+
+/* ===== 控制面板 ===== */
+.panel{
+  margin-top:26px;
+  width:100%;
+  max-width:760px;
+  background:#FFFDF6;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px 24px;
+  box-shadow:0 6px 20px rgba(90,60,30,.08);
+}
+.panel-title{
+  font-family:'Noto Serif SC',serif;
+  font-weight:700;
+  font-size:15px;
+  color:var(--red);
+  letter-spacing:.12em;
+  margin-bottom:14px;
+}
+.scene-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{
+  font-family:'Noto Sans SC',sans-serif;
+  font-size:13.5px;
+  padding:7px 16px;
+  border-radius:999px;
+  border:1px solid #D8CBAE;
+  background:transparent;
+  color:var(--ink-soft);
+  cursor:pointer;
+  transition:all .2s;
+}
+.chip:hover{border-color:var(--red);color:var(--red)}
+.chip.active{
+  background:var(--red);
+  border-color:var(--red);
+  color:#FBF6EA;
+}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{
+  font-family:'Noto Sans SC',sans-serif;
+  font-size:14px;
+  font-weight:500;
+  padding:10px 22px;
+  border-radius:8px;
+  cursor:pointer;
+  border:1px solid var(--red);
+  background:var(--red);
+  color:#FBF6EA;
+  transition:all .18s;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.btn:hover{background:var(--red-deep);box-shadow:0 4px 12px rgba(138,26,30,.25)}
+.btn.ghost{
+  background:transparent;
+  color:var(--red);
+}
+.btn.ghost:hover{background:rgba(165,32,36,.06)}
+.custom-box{
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px dashed #D8CBAE;
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;
+}
+.custom-box label{
+  font-size:13px;color:var(--ink-soft);
+  font-family:'Noto Serif SC',serif;
+  letter-spacing:.08em;
+}
+.custom-box input{
+  flex:1;min-width:220px;
+  font-family:'Noto Serif SC',serif;
+  font-size:15px;
+  padding:10px 14px;
+  border:1px solid #D8CBAE;
+  border-radius:8px;
+  background:#FFFDF6;
+  color:var(--ink);
+  outline:none;
+  transition:border-color .2s;
+}
+.custom-box input:focus{border-color:var(--red)}
+.custom-box input::placeholder{color:#B5A98F;font-family:'Noto Sans SC',sans-serif;font-size:13px}
+.hint{
+  margin-top:14px;
+  font-size:12px;
+  color:var(--ink-soft);
+  line-height:1.7;
+  letter-spacing:.04em;
+}
+.hint b{color:var(--red);font-weight:600}
+
+/* toast */
+#toast{
+  position:fixed;
+  left:50%;bottom:34px;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--ink);
+  color:#F7F0E1;
+  font-size:13.5px;
+  padding:10px 20px;
+  border-radius:999px;
+  opacity:0;
+  pointer-events:none;
+  transition:all .3s;
+  z-index:99;
+  letter-spacing:.05em;
+}
+#toast.show{opacity:.96;transform:translateX(-50%) translateY(0)}
+
+footer{
+  margin-top:34px;
+  font-size:12px;
+  color:var(--ink-soft);
+  letter-spacing:.1em;
+  text-align:center;
+  line-height:1.9;
+}
+footer .site{font-family:'Noto Serif SC',serif;font-size:13px;color:var(--red);letter-spacing:.2em}
+/* 热门对联 SEO 内容区 */
+.hot-links{
+  width:100%;
+  max-width:760px;
+  margin-top:30px;
+  background:#FFFDF6;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px 24px;
+}
+.hot-title{
+  font-family:'Noto Serif SC',serif;
+  font-weight:700;
+  font-size:15px;
+  color:var(--red);
+  letter-spacing:.12em;
+  margin-bottom:14px;
+}
+.hot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.hot-card{
+  border:1px solid #E3D6B6;
+  border-radius:10px;
+  padding:14px;
+  background:#FBF6EA;
+}
+.hot-card b{
+  display:block;
+  font-family:'Noto Serif SC',serif;
+  color:var(--ink);
+  font-size:14px;
+  margin-bottom:8px;
+}
+.hot-card span{
+  font-family:'Noto Serif SC',serif;
+  font-size:13px;
+  color:var(--ink-soft);
+  line-height:1.9;
+}
+.hot-note{
+  margin-top:14px;
+  font-size:12.5px;
+  color:var(--ink-soft);
+  letter-spacing:.04em;
+}
+@media (max-width:560px){
+  .hot-grid{grid-template-columns:1fr}
+  .hot-links{padding:18px 14px}
+}
+
+/* 响应式 */
+@media (max-width:560px){
+  .lines{gap:16px}
+  .line{padding:14px 9px;letter-spacing:.1em}
+  .center-ornament{display:none}
+  .panel{padding:18px 14px}
+  .btn,.chip{min-height:44px}
+  .custom-box input{font-size:16px;min-height:44px}
+  .hint{font-size:13.5px}
+  footer{font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1 class="brand">对联生成器<small>对 联 . c n</small></h1>
+    <p class="subtitle">挥毫泼墨 · 字里藏春</p>
+    <div class="seal-row"><div class="seal">福</div><div class="seal">吉</div></div>
+  </header>
+
+  <!-- ===== 对联展示区 ===== -->
+  <section class="stage" aria-label="对联展示">
+    <div class="couplet-board">
+      <div class="hengpi" id="hengpiText">万象更新</div>
+      <div class="lines">
+        <div class="line up" id="upLine">爆竹声声辞旧岁</div>
+        <div class="center-ornament">
+          <span class="ring">福</span>
+        </div>
+        <div class="line down" id="downLine">梅花朵朵迎新春</div>
+      </div>
+      <div class="signature" id="signatureText">—— 对联.cn 敬献 · 吉日良辰</div>
+    </div>
+  </section>
+
+  <!-- ===== 控制面板 ===== -->
+  <section class="panel" aria-label="生成控制">
+    <div class="panel-title">选择场景，生成一副应景对联</div>
+    <div class="scene-chips" id="sceneChips"></div>
+    <div class="actions">
+      <button class="btn" id="btnNew">换一副</button>
+      <button class="btn ghost" id="btnCopy">复制对联</button>
+    </div>
+    <div class="custom-box">
+      <label for="upInput">自定义上联</label>
+      <input id="upInput" type="text" maxlength="16" placeholder="输入上联，如：春回大地千山秀">
+      <button class="btn ghost" id="btnMatch">对下联</button>
+    </div>
+    <div class="hint">
+      <b>用法</b>：点「换一副」随机生成；点场景标签按节日定制；输入上联后点「对下联」，系统按对仗词库为你续出下联与横批。
+    </div>
+  </section>
+
+  <footer>
+    <div class="site">对 联 . c n</div>
+    传承千年联墨 · 助力万家喜事 · 本工具自动生成内容仅供参考
+  </footer>
+</div>
+
+<!-- ===== 热门对联（SEO 内容区） ===== -->
+<section class="hot-links" aria-label="热门对联推荐">
+  <div class="hot-title">热门对联推荐</div>
+  <div class="hot-grid">
+    <div class="hot-card"><b>春节通用</b><span>上联：爆竹声声辞旧岁<br>下联：梅花朵朵迎新春<br>横批：万象更新</span></div>
+    <div class="hot-card"><b>开业大吉</b><span>上联：生意兴隆通四海<br>下联：财源茂盛达三江<br>横批：财源广进</span></div>
+    <div class="hot-card"><b>祝寿喜庆</b><span>上联：福如东海长流水<br>下联：寿比南山不老松<br>横批：福寿康宁</span></div>
+  </div>
+  <p class="hot-note">更多春联、开业联、婚联、寿联，点击上方场景标签即可一键生成。</p>
+</section>
+
+<div id="toast"></div>
+
+<script>
+/* ===== 对联词库 ===== */
+var SCENES = [
+  { key:'chunjie', name:'春节',  hp:['万象更新','春回大地','福满人间','岁岁平安','阖家欢乐'],
+    ups:['爆竹声声辞旧岁','天增岁月人增寿','春回大地千山秀','迎新春江山锦绣','一帆风顺年年好','喜居宝地千年旺','绿竹别其三分景','瑞雪纷飞辞旧岁'],
+    downs:['梅花朵朵迎新春','春满乾坤福满门','日照神州万木荣','辞旧岁事泰辉煌','万事如意步步高','福照家门万事兴','红梅正报万家春','红梅报喜迎新春'] },
+  { key:'kaiye', name:'开业',  hp:['开业大吉','财源广进','生意兴隆','宏图大展','日进斗金'],
+    ups:['财源滚滚随春到','门迎晓日财源广','生意兴隆通四海','四海客来皆朋友','骏马扬蹄奔锦绣','货好誉满千里客','兴业长新昭日月','和气致祥财运旺'],
+    downs:['喜气洋洋伴福来','户纳春风喜庆多','财源茂盛达三江','八方货聚尽财源','春风得意展宏图','价廉利盈万家财','生财有道振乾坤','满门增瑞福泽长'] },
+  { key:'hunqing', name:'婚庆',  hp:['百年好合','永结同心','天长地久','鸾凤和鸣','喜结良缘'],
+    ups:['琴瑟和鸣鸾凤舞','两情鱼水春作伴','同心结闪红叶色','海枯石烂同心永结','珠联璧合偕连理','红烛映堂双璧合'],
+    downs:['夫妻恩爱地天长','百年恩爱花为媒','连理花飘金桂香','地阔天高比翼齐飞','花好月圆结同心','彩灯照户并蒂开'] },
+  { key:'qiaoqian', name:'乔迁',  hp:['乔迁之喜','安居乐业','新居焕彩','紫气东来','吉日迁居'],
+    ups:['迁居喜逢吉祥日','华堂锦乡生万象','门对青山财源广','新屋落成千载盛','迁入新居四季旺','日照新居添锦绣'],
+    downs:['安宅正遇如意春','新居美轮耀千秋','户迎绿水福气多','和睦人家万事兴','安居宝地百福临','花栽满院吐芬芳'] },
+  { key:'zhushou', name:'祝寿',  hp:['福寿康宁','松鹤延年','寿比南山','福如东海','德高望重'],
+    ups:['福如东海长流水','松龄长岁月','欣逢盛世千般好','德润身而寿','岁岁春秋添福寿','耄耋康宁承喜乐'],
+    downs:['寿比南山不老松','鹤语记春秋','喜享高龄百岁安','仁者寿以康','年年日月焕光华','期颐矍铄享天伦'] },
+  { key:'shufang', name:'书房',  hp:['书香门第','学海无涯','笔耕不辍','宁静致远','博学笃志'],
+    ups:['书山有路勤为径','宝剑锋从磨砺出','室雅何须大','墨香盈室静','博览群书通古今','春风大雅能容物'],
+    downs:['学海无涯苦作舟','梅花香自苦寒来','花香不在多','书韵入怀清','潜心学问贯中西','秋水文章不染尘'] },
+  { key:'tongyong', name:'通用', hp:['心想事成','万事如意','自强不息','厚德载物','吉祥如意'],
+    ups:['万事如意展宏图','春满人间百花吐艳','风声雨声读书声','海纳百川有容乃大','岁月峥嵘须拼搏','福星高照平安宅'],
+    downs:['心想事成兴伟业','福临小院四季常安','家事国事天下事','壁立千仞无欲则刚','年华潇洒莫蹉跎','喜气常盈和睦家'] }
+];
+
+/* 对仗词库：双字词对优先，单字兜底 */
+var PAIRS = {
+  n: { '天':'地','山':'水','风':'月','梅':'雪','松':'鹤','福':'春','日':'云','龙':'凤','金':'玉','花':'鸟','江':'海','春':'秋','海':'山','门':'户','路':'舟','喜':'春','岁':'春','家':'门','国':'家','书':'剑','星':'月','雨':'风','云':'日','水':'山','地':'天','月':'风','雪':'梅','鹤':'松','玉':'金','凤':'龙','鸟':'花','秋':'春','业':'家','财':'福','客':'财','友':'朋','山':'水','川':'海','宙':'坤','尘':'水','节':'年','茶':'酒','诗':'画','砚':'笺','琴':'瑟','墨':'香','烛':'灯','庭':'院','宇':'堂','楼':'阁','窗':'户','园':'林','霞':'虹','辉':'光','吉':'祥','瑞':'祥' },
+  adj:{ '新':'旧','祥':'瑞','吉':'庆','富':'贵','康':'宁','高':'远','深':'长','大':'广','喜':'欢','欢':'喜','乐':'安','安':'乐','泰':'和','和':'泰','美':'佳','佳':'美','秀':'荣','荣':'秀','奇':'妙','妙':'奇','宏':'伟','伟':'宏','广':'大','远':'高','长':'深','明':'净','净':'明','清':'雅','雅':'清','静':'宁','宁':'静','顺':'昌','昌':'顺','兴':'旺','旺':'兴','荣':'茂','茂':'荣' },
+  num:{ '一':'千','二':'万','三':'百','四':'九','五':'八','六':'七','七':'六','八':'五','九':'四','十':'三','百':'千','千':'万','万':'千' },
+  dir:{ '上':'下','下':'上','东':'西','西':'东','南':'北','北':'南','前':'后','后':'前','里':'外','外':'里','左':'右','右':'左','中':'外','内':'外' },
+  v:  { '迎':'送','送':'迎','纳':'呈','呈':'纳','生':'聚','聚':'生','来':'去','去':'来','起':'落','落':'起','开':'合','合':'开','入':'出','出':'入','辞':'报','报':'辞','增':'满','满':'增','添':'增','展':'兴','兴':'展','通':'达','达':'通','临':'照','照':'临','入':'添','育':'生','放':'开','流':'回','回':'流','照':'临','映':'生','挂':'悬','悬':'挂','载':'承','承':'载' },
+  color:{ '红':'绿','绿':'红','黄':'紫','紫':'黄','白':'黑','黑':'白','青':'蓝','蓝':'青','金':'玉','玉':'金','碧':'丹','丹':'碧','朱':'翠','翠':'朱' }
+};
+/* 平声尾字候选（一/二声，用于下联末字） */
+var PING_TAIL = ['春','门','花','年','家','祥','昌','康','长','芳','华','香','荣','光','堂','庭','园','山','川','洲','东','风','红','云','新','安','宁','兴','和','明','清','成','通','丰','隆','盈','增','高','千','合','来','回','来','归','辉','煌','洋','城','村','天','平','春'];
+
+var current = { scene:0, hengpi:'', up:'', down:'' };
+var rng = function(){ return Math.floor(Math.random()*100000) % 100 / 100; };
+
+/* ===== 场景渲染 ===== */
+function renderChips(){
+  var box = document.getElementById('sceneChips');
+  box.innerHTML = '';
+  SCENES.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.className = 'chip' + (i === current.scene ? ' active' : '');
+    b.textContent = s.name;
+    b.setAttribute('data-i', i);
+    b.addEventListener('click', function(){
+      current.scene = i;
+      renderChips();
+      pickRandom();
+    });
+    box.appendChild(b);
+  });
+}
+
+/* ===== 随机生成 ===== */
+function pickRandom(){
+  var s = SCENES[current.scene];
+  var i = Math.floor(rng() * s.ups.length);
+  current.up = s.ups[i];
+  current.down = s.downs[i];
+  current.hengpi = s.hp[Math.floor(rng() * s.hp.length)];
+  renderCouplet();
+}
+
+/* ===== 渲染 ===== */
+function renderCouplet(){
+  document.getElementById('hengpiText').textContent = current.hengpi;
+  document.getElementById('upLine').textContent = current.up;
+  document.getElementById('downLine').textContent = current.down;
+  var sig = '—— 对联.cn 敬献 · ' + SCENES[current.scene].name + '之喜';
+  document.getElementById('signatureText').textContent = sig;
+}
+
+/* ===== 对下联 ===== */
+function isPing(ch){
+  var code = ch.charCodeAt(0);
+  return code < 0x4E00 ? false : (['春','花','年','门','家','祥','昌','康','长','芳','华','香','荣','光','堂','庭','园','山','川','洲','东','风','红','云','新','安','宁','兴','和','明','清','成','通','丰','隆','盈','增','高','千','合','来','回','归','辉','煌','洋','城','村','天','平'].indexOf(ch) >= 0);
+}
+function lookupPair(ch){
+  var pools = [PAIRS.n, PAIRS.adj, PAIRS.num, PAIRS.dir, PAIRS.v, PAIRS.color];
+  for (var i = 0; i < pools.length; i++){
+    if (pools[i][ch]) return pools[i][ch];
+  }
+  return null;
+}
+function pairLine(up){
+  var chars = up.split('');
+  var out = [];
+  for (var k = 0; k < chars.length; k++){
+    var c = chars[k];
+    var p = lookupPair(c);
+    if (p){ out.push(p); }
+    else {
+      /* 常用字联想 */
+      var fallback = {
+        '平':'安','安':'泰','意':'心','心':'意','事':'业','业':'兴','财':'源','源':'丰',
+        '百':'千','万':'千','里':'重','重':'复','路':'途','途':'顺','顺':'泰','泰':'安',
+        '秀':'荣','荣':'华','华':'彩','彩':'虹','虹':'霞','霞':'光','光':'辉','辉':'煌'
+      };
+      out.push(fallback[c] || c);
+    }
+  }
+  /* 末字调整：上联末字若为平声，尝试换下联末字为平声对仗 */
+  var last = out[out.length - 1];
+  if (!isPing(last)){
+    var lastUp = chars[chars.length - 1];
+    var alt = lookupPair(lastUp);
+    if (alt && isPing(alt)){ out[out.length-1] = alt; }
+  }
+  return out.join('');
+}
+
+/* ===== 复制 ===== */
+function copyText(txt){
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){
+      toast('对联已复制到剪贴板');
+    }, function(){ legacyCopy(txt); });
+  } else { legacyCopy(txt); }
+}
+function legacyCopy(txt){
+  var ta = document.createElement('textarea');
+  ta.value = txt;
+  ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); toast('对联已复制到剪贴板'); }
+  catch(e){ toast('复制失败，请手动复制'); }
+  document.body.removeChild(ta);
+}
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+}
+
+/* ===== 事件绑定 ===== */
+document.getElementById('btnNew').addEventListener('click', function(){ pickRandom(); });
+document.getElementById('btnCopy').addEventListener('click', function(){
+  var txt = '横批：' + current.hengpi + '\n' + current.up + '\n' + current.down;
+  copyText(txt);
+});
+document.getElementById('btnMatch').addEventListener('click', function(){
+  var input = document.getElementById('upInput');
+  var val = (input.value || '').trim();
+  if (!val){ toast('请先输入上联'); input.focus(); return; }
+  if (val.length < 4){ toast('上联至少 4 个字'); return; }
+  var down = pairLine(val);
+  current.up = val;
+  current.down = down;
+  current.hengpi = SCENES[current.scene].hp[Math.floor(rng() * SCENES[current.scene].hp.length)];
+  renderCouplet();
+  toast('已为你对上下联');
+});
+document.getElementById('upInput').addEventListener('keydown', function(e){
+  if (e.key === 'Enter'){ document.getElementById('btnMatch').click(); }
+});
+
+/* ===== 初始化 ===== */
+renderChips();
+pickRandom();
+</script>
+</body>
+</html>
