@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>对联生成器 - 在线对对联工具 | 春节开业婚庆对联大全 | 对联.cn</title>
-<meta name="description" content="对联生成器是一款免费的在线对对联工具，支持春节、开业、婚庆、乔迁、祝寿、书房等场景对联自动生成，也可输入上联智能对下联，自动匹配横批。春联、开业联、婚联、寿联一键生成，传承千年联墨文化。">
-<meta name="keywords" content="对联生成器,对对联,对联大全,春联,春联生成,开业对联,婚庆对联,乔迁对联,祝寿对联,横批,在线对联,春节对联,对联.cn">
+<meta name="description" content="对联生成器是一款免费的在线对对联工具，内置一万二千余副真实经典对联数据库，支持春节、开业、婚庆、乔迁、祝寿、书房等场景对联自动生成，也可输入上联智能对下联，自动匹配横批。春联、开业联、婚联、寿联一键生成，传承千年联墨文化。">
+<meta name="keywords" content="对联生成器,对对联,对联大全,一万副对联,经典对联,春联,春联生成,开业对联,婚庆对联,乔迁对联,祝寿对联,横批,在线对联,春节对联,对联.cn">
 <meta name="robots" content="index, follow">
 <meta name="author" content="对联.cn">
 <link rel="canonical" href="https://mfujun2025.github.io/duilian/">
@@ -27,7 +27,7 @@
   "@type": "WebApplication",
   "name": "对联生成器",
   "url": "https://mfujun2025.github.io/duilian/",
-  "description": "免费在线对联生成工具，支持春节、开业、婚庆、乔迁、祝寿、书房、通用七大场景，输入上联可智能对下联并自动匹配横批。",
+  "description": "免费在线对联生成工具，内置一万二千余副真实经典对联，支持春节、开业、婚庆、乔迁、祝寿、书房、通用七大场景，输入上联可智能对下联并自动匹配横批。",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "Any",
   "inLanguage": "zh-CN",
@@ -384,6 +384,15 @@ header{text-align:center;margin-bottom:8px}
   letter-spacing:.04em;
 }
 .hint b{color:var(--red);font-weight:600}
+.db-note{
+  margin-top:8px;
+  font-size:12px;
+  color:var(--red-deep);
+  line-height:1.7;
+  letter-spacing:.04em;
+  text-align:center;
+}
+.db-note b{color:var(--red);font-weight:700}
 
 /* toast */
 #toast{
@@ -528,6 +537,7 @@ footer .site{font-family:'Noto Serif SC',serif;font-size:13px;color:var(--red);l
 <div class="hint">
       <b>用法</b>：点「换一副」随机生成；点场景标签按节日定制；输入上联后点「对下联」，系统按对仗词库为你续出下联与横批。
     </div>
+    <div class="db-note">对联库已收录 <b id="dbCount">一万二千余副</b> 真实经典对联，春节与通用场景海量随机，常换常新。</div>
   </section>
 
   <footer>
@@ -549,7 +559,8 @@ footer .site{font-family:'Noto Serif SC',serif;font-size:13px;color:var(--red);l
 
 <div id="toast"></div>
 
-<script>
+<script src="couplets.js" defer></script>
+<script defer>
 /* ===== 经典对联数据库（核心数据源，全部为真实经典对联） ===== */
 var COUPLET_DB = {
   chunjie: {
@@ -889,9 +900,24 @@ function renderChips(){
 /* ===== 从数据库随机取一副 ===== */
 function pickRandom(){
   var db = COUPLET_DB[current.scene];
-  var i = Math.floor(rng() * db.pairs.length);
-  current.up = db.pairs[i].up;
-  current.down = db.pairs[i].down;
+  var big = (typeof COUPLET_BIG !== 'undefined') ? COUPLET_BIG : null;
+  var i;
+  if (big && (current.scene === 'chunjie' || current.scene === 'tongyong')){
+    /* 大库优先（经典七言海量库），85% 大库 + 15% 精选小库 */
+    if (rng() < 0.85 && big.length){
+      i = Math.floor(rng() * big.length);
+      current.up = big[i].up;
+      current.down = big[i].down;
+    } else {
+      i = Math.floor(rng() * db.pairs.length);
+      current.up = db.pairs[i].up;
+      current.down = db.pairs[i].down;
+    }
+  } else {
+    i = Math.floor(rng() * db.pairs.length);
+    current.up = db.pairs[i].up;
+    current.down = db.pairs[i].down;
+  }
   current.hengpi = db.hp[Math.floor(rng() * db.hp.length)];
   renderCouplet();
 }
@@ -912,7 +938,7 @@ function renderCouplet(){
 /* ===== 数据库匹配：精确 → 相似（同字数、同位重合≥60%） → 未命中 ===== */
 function findCouplet(up, sceneKey){
   var keys = sceneKey ? [sceneKey] : SCENE_KEYS;
-  /* 1. 精确匹配（优先当前场景，再全库） */
+  /* 1. 精确匹配（优先当前场景，再全库，再大库） */
   var keysOrder = keys.concat(SCENE_KEYS.filter(function(k){ return keys.indexOf(k) < 0; }));
   for (var a = 0; a < keysOrder.length; a++){
     var db = COUPLET_DB[keysOrder[a]];
@@ -920,7 +946,14 @@ function findCouplet(up, sceneKey){
       if (db.pairs[b].up === up) return { up: up, down: db.pairs[b].down, hp: db.hp[Math.floor(rng()*db.hp.length)], key: keysOrder[a] };
     }
   }
-  /* 2. 相似匹配：同字数，同位字重合率 */
+  /* 1.5 大库精确匹配 */
+  var big = (typeof COUPLET_BIG !== 'undefined') ? COUPLET_BIG : null;
+  if (big){
+    for (var g = 0; g < big.length; g++){
+      if (big[g].up === up) return { up: up, down: big[g].down, hp: COUPLET_DB[current.scene].hp[Math.floor(rng()*COUPLET_DB[current.scene].hp.length)], key: current.scene };
+    }
+  }
+  /* 2. 相似匹配：同字数，同位字重合率（小库 + 大库） */
   var best = null, bestScore = 0;
   for (var c = 0; c < keysOrder.length; c++){
     var db2 = COUPLET_DB[keysOrder[c]];
@@ -934,26 +967,44 @@ function findCouplet(up, sceneKey){
       if (score > bestScore){ bestScore = score; best = db2.pairs[d]; }
     }
   }
+  if (big){
+    for (var h = 0; h < big.length; h++){
+      var bu = big[h].up;
+      if (bu.length !== up.length) continue;
+      var score2 = 0;
+      for (var k = 0; k < up.length; k++){
+        if (up.charAt(k) === bu.charAt(k)) score2++;
+      }
+      if (score2 > bestScore){ bestScore = score2; best = big[h]; }
+    }
+  }
   if (best && bestScore >= Math.ceil(up.length * 0.6)){
     return { up: best.up, down: best.down, hp: COUPLET_DB[current.scene].hp[Math.floor(rng()*COUPLET_DB[current.scene].hp.length)], key: current.scene };
   }
   return null;
 }
 
-/* 按字数推荐库内经典上联（未命中时给候选） */
+/* 按字数推荐库内经典上联（未命中时给候选，小库 + 大库） */
 function suggestByLen(up, sceneKey, limit){
   var cands = [];
   var db = COUPLET_DB[sceneKey];
   for (var i = 0; i < db.pairs.length; i++){
     if (db.pairs[i].up.length === up.length) cands.push(db.pairs[i]);
   }
-  if (cands.length < limit){
+  if (cands.length < limit * 2){
     for (var j = 0; j < SCENE_KEYS.length; j++){
       if (SCENE_KEYS[j] === sceneKey) continue;
       var db2 = COUPLET_DB[SCENE_KEYS[j]];
       for (var k = 0; k < db2.pairs.length; k++){
         if (db2.pairs[k].up.length === up.length) cands.push(db2.pairs[k]);
       }
+    }
+  }
+  /* 大库补充同字数候选 */
+  var big = (typeof COUPLET_BIG !== 'undefined') ? COUPLET_BIG : null;
+  if (big && cands.length < limit * 2){
+    for (var p = 0; p < big.length && cands.length < limit * 2; p++){
+      if (big[p].up.length === up.length) cands.push(big[p]);
     }
   }
   /* 去重 */
