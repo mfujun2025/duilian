@@ -320,6 +320,62 @@ header{text-align:center;margin-bottom:8px}
 }
 .custom-box input:focus{border-color:var(--red)}
 .custom-box input::placeholder{color:#B5A98F;font-family:'Noto Sans SC',sans-serif;font-size:13px}
+/* 结果预览区：输入框下方就近展示 */
+.result-preview{
+  margin-top:16px;
+  display:none;
+  background:#FBF6EA;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px 16px;
+  box-shadow:0 4px 12px rgba(90,60,30,.08);
+  animation:rpIn .35s ease;
+}
+.result-preview.show{display:block}
+@keyframes rpIn{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.rp-head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:10px;
+}
+.rp-title{
+  font-family:'Noto Serif SC',serif;
+  font-size:13px;color:var(--red);
+  letter-spacing:.1em;font-weight:700;
+}
+.rp-hengpi{
+  font-family:'Noto Serif SC',serif;
+  font-size:14px;color:var(--gold);
+  font-weight:700;letter-spacing:.2em;
+  background:rgba(165,32,36,.08);
+  padding:3px 12px;border-radius:6px;
+}
+.rp-lines{
+  display:flex;justify-content:center;gap:26px;
+}
+.rp-line{
+  writing-mode:vertical-rl;
+  font-family:'Noto Serif SC',serif;
+  font-size:clamp(18px,2.6vw,22px);
+  font-weight:700;line-height:1.5;letter-spacing:.1em;
+  color:var(--ink);
+  background:#FFFDF6;
+  border:1px solid #E3D6B6;border-radius:8px;
+  padding:8px 7px;
+}
+.rp-line.up{order:1}
+.rp-line.down{order:2}
+.rp-tag{
+  margin-top:10px;text-align:center;
+  font-size:12px;color:var(--ink-soft);
+  letter-spacing:.06em;
+}
+@media (max-width:560px){
+  .rp-line{font-size:16px;padding:6px 5px}
+}
+
 .hint{
   margin-top:14px;
   font-size:12px;
@@ -458,7 +514,18 @@ footer .site{font-family:'Noto Serif SC',serif;font-size:13px;color:var(--red);l
       <input id="upInput" type="text" maxlength="16" placeholder="输入上联，如：春回大地千山秀">
       <button class="btn ghost" id="btnMatch">对下联</button>
     </div>
-    <div class="hint">
+    <div class="result-preview" id="resultPreview" aria-live="polite">
+      <div class="rp-head">
+        <span class="rp-title">生成结果 · 就近查看</span>
+        <span class="rp-hengpi" id="rpHengpi">万象更新</span>
+      </div>
+      <div class="rp-lines">
+        <div class="rp-line up" id="rpUp">爆竹声声辞旧岁</div>
+        <div class="rp-line down" id="rpDown">梅花朵朵迎新春</div>
+      </div>
+      <div class="rp-tag" id="rpTag">已按对仗规则为您对上</div>
+    </div>
+<div class="hint">
       <b>用法</b>：点「换一副」随机生成；点场景标签按节日定制；输入上联后点「对下联」，系统按对仗词库为你续出下联与横批。
     </div>
   </section>
@@ -715,6 +782,10 @@ function renderCouplet(){
   document.getElementById('downLine').textContent = current.down;
   var sig = '—— 对联.cn 敬献 · ' + SCENES[current.scene].name + '之喜';
   document.getElementById('signatureText').textContent = sig;
+  /* 同步底部就近预览区 */
+  document.getElementById('rpHengpi').textContent = current.hengpi;
+  document.getElementById('rpUp').textContent = current.up;
+  document.getElementById('rpDown').textContent = current.down;
 }
 
 /* ===== 对下联 ===== */
@@ -866,7 +937,11 @@ function toast(msg){
 }
 
 /* ===== 事件绑定 ===== */
-document.getElementById('btnNew').addEventListener('click', function(){ pickRandom(); });
+document.getElementById('btnNew').addEventListener('click', function(){
+  pickRandom();
+  document.getElementById('rpTag').textContent = '已为您随机生成一副应景对联';
+  document.getElementById('resultPreview').classList.add('show');
+});
 document.getElementById('btnCopy').addEventListener('click', function(){
   var txt = '横批：' + current.hengpi + '\n' + current.up + '\n' + current.down;
   copyText(txt);
@@ -889,7 +964,14 @@ document.getElementById('btnMatch').addEventListener('click', function(){
   current.down = down;
   current.hengpi = SCENES[current.scene].hp[Math.floor(rng() * SCENES[current.scene].hp.length)];
   renderCouplet();
+  document.getElementById('rpTag').textContent = tip;
+  var rp = document.getElementById('resultPreview');
+  rp.classList.add('show');
   toast(tip);
+  /* 滚动到结果预览区，无需返回顶部 */
+  setTimeout(function(){
+    rp.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }, 80);
 });
 document.getElementById('upInput').addEventListener('keydown', function(e){
   if (e.key === 'Enter'){ document.getElementById('btnMatch').click(); }
